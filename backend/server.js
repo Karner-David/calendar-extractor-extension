@@ -4,6 +4,7 @@ const multer = require('multer')
 const pdf = require('pdf-parse')
 const { GoogleGenerativeAI, SchemaType } = require('@google/generative-ai')
 const cors = require('cors')
+const { OAuth2Client } = require('google-auth-library');
 
 const app = express()
 app.use(cors())
