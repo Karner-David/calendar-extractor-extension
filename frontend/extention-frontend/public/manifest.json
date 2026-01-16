@@ -1,15 +1,17 @@
 {
   "manifest_version": 3,
-  "name": "Gemini Calendar Extractor",
+  "name": "Calendar AI",
   "version": "1.0",
+  "permissions": [
+    "identity"
+  ],
+
   "action": {
     "default_popup": "index.html"
   },
-  "permissions": [
-    "identity" 
-  ],
+
   "oauth2": {
-    "client_id": "YOUR_GOOGLE_CLIENT_ID_HERE",
+    "client_id": "677758899476-hpt6rc73gb1ugqqhnhrd1k9o6jks8hoc.apps.googleusercontent.com",
     "scopes": [
       "https://www.googleapis.com/auth/calendar.events"
     ]
