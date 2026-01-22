@@ -39,6 +39,8 @@ import './App.css'
 //   ]
 // };
 
+const API_URL = "https://calendar-extractor-extension.onrender.com/extract"
+
 function App() {
   const [status, setStatus] = useState('done');
   const [logs, setLogs] = useState([])
@@ -71,8 +73,11 @@ function App() {
       setLogs(prev => [...prev, "Analyzing pdf with Gemini"])
 
       try {
-        const response = await fetch('http://localhost:3000/extract', {
+        const response = await fetch(API_URL, {
           method: 'POST',
+          headers: {
+            'Authorization': `Bearer ${token}`
+          },
           body: formData
         })
 
@@ -164,7 +169,7 @@ function App() {
     console.log("Uploading Event:", JSON.stringify(event)); 
 
     // change long thing to primary later maybe
-    const response = await fetch('https://www.googleapis.com/calendar/v3/calendars/d976da59676075866e4f669f61682a01e4e769d9587226d9e36eda9001dca6df@group.calendar.google.com/events', {
+    const response = await fetch('https://www.googleapis.com/calendar/v3/calendars/primary/events', {
       method: 'POST',
       headers: {
         'Authorization': `Bearer ${token}`,
