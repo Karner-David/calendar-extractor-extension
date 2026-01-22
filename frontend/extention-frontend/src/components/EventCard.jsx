@@ -13,6 +13,11 @@ import {
   CardTitle,
 } from "@/components/ui/card"
 
+const safeGetTime = (dateTimeStr) => {
+    if (!dateTimeStr || !dateTimeStr.includes('T')) return "00:00";
+    return dateTimeStr.split("T")[1].substring(0, 5);
+};
+
 export default function EventCard({eventData, onUpdate, onDelete}) {
     const isUserEdit = useRef(false)
 
@@ -21,23 +26,9 @@ export default function EventCard({eventData, onUpdate, onDelete}) {
     const [desc, setDesc] = useState(eventData.description);
     const [loc, setLoc] = useState(eventData.location);
     const [startDate, setStartDate] = useState(() => new Date(eventData.startDateTime))
-    const [startTime, setStartTime] = useState(() => {
-        try {
-            let time = eventData.startDateTime.split("T")[1].substring(0, 5);
-        } catch (err) {
-            console.log(err)
-        }
-        return eventData.startDateTime.split("T")[1].substring(0, 5);
-    })
+    const [startTime, setStartTime] = useState(() => safeGetTime(eventData.startDateTime))
     const [endDate, setEndDate] = useState(() => new Date(eventData.endDateTime))
-    const [endTime, setEndTime] = useState(() => {
-        try {
-            let time = eventData.endDateTime.split("T")[1].substring(0, 5);
-        } catch (err) {
-            console.log(err)
-        }
-        return eventData.endDateTime.split("T")[1].substring(0, 5);
-    })
+    const [endTime, setEndTime] = useState(() => safeGetTime(eventData.endDateTime))
 
     const rebuildDateTime = (dateObj, timeStr) => {
         if (!dateObj) return ""
@@ -62,9 +53,9 @@ export default function EventCard({eventData, onUpdate, onDelete}) {
         setDesc(eventData.description)
         setLoc(eventData.location)
         setStartDate(new Date(eventData.startDateTime))
-        setStartTime(eventData.startDateTime.split("T")[1].substring(0, 5))
+        setStartTime(safeGetTime(eventData.startDateTime))
         setEndDate(new Date(eventData.endDateTime))
-        setEndTime(eventData.endDateTime.split("T")[1].substring(0, 5))
+        setEndTime(safeGetTime(eventData.endDateTime))
     }, [eventData])
 
     useEffect(() => {

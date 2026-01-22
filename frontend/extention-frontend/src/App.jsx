@@ -83,7 +83,15 @@ function App() {
 
         const data = await response.json()
 
-        setData(data)
+        const validEvents = data.events.filter(event => {
+          const hasSummary = event.summary;
+
+          const hasStartTime = event.startDateTime;
+
+          return hasSummary && hasStartTime;
+        })
+
+        setData({ ... data, events: validEvents })
         setEventIndex(1)
 
         setStatus("done")
@@ -222,7 +230,7 @@ function App() {
       return { ...prevData, events: copyEvents}
     })
 
-    if (eventIndex > 1) {
+    if (eventIndex === data.events.length) {
       setEventIndex(prev => prev - 1)
     }
   }
