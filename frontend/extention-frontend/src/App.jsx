@@ -6,45 +6,45 @@ import { Spinner } from './components/ui/spinner';
 import { ArrowLeft, ArrowRight} from 'lucide-react'
 import './App.css'
 
-// const MOCK_DATA = {
-//   events: [
-//     {
-//       description: "First day of classes",
-//       endDateTime: "2026-01-12T23:59:59",
-//       location: "Not Specified",
-//       startDateTime: "2026-01-12T00:00:00",
-//       summary: "First day of classes"
-//     },
-//     {
-//       description: "Martin Luther King, Jr. Day",
-//       endDateTime: "2026-01-19T23:59:59",
-//       location: "Not Specified",
-//       startDateTime: "2026-01-19T00:00:00",
-//       summary: "Martin Luther King, Jr. Day"
-//     },
-//     {
-//       description: "Last day to drop a class",
-//       endDateTime: "2026-01-28T23:59:59",
-//       location: "Not Specified",
-//       startDateTime: "2026-01-28T00:00:00",
-//       summary: "Last day to drop a class"
-//     },
-//     {
-//       description: "Spring Break",
-//       endDateTime: "2026-03-21T23:59:59",
-//       location: "Not Specified",
-//       startDateTime: "2026-03-16T00:00:00",
-//       summary: "Spring Break"
-//     }
-//   ]
-// };
+const MOCK_DATA = {
+  events: [
+    {
+      description: "First day of classes",
+      endDateTime: "2026-01-12T23:59:59",
+      location: "Not Specified",
+      startDateTime: "2026-01-12T00:00:00",
+      summary: "First day of classes"
+    },
+    {
+      description: "Martin Luther King, Jr. Day",
+      endDateTime: "2026-01-19T23:59:59",
+      location: "Not Specified",
+      startDateTime: "2026-01-19T00:00:00",
+      summary: "Martin Luther King, Jr. Day"
+    },
+    {
+      description: "Last day to drop a class",
+      endDateTime: "2026-01-28T23:59:59",
+      location: "Not Specified",
+      startDateTime: "2026-01-28T00:00:00",
+      summary: "Last day to drop a class"
+    },
+    {
+      description: "Spring Break",
+      endDateTime: "2026-03-21T23:59:59",
+      location: "Not Specified",
+      startDateTime: "2026-03-16T00:00:00",
+      summary: "Spring Break"
+    }
+  ]
+};
 
 const API_URL = "https://calendar-extractor-extension.onrender.com/extract"
 
 function App() {
   const [status, setStatus] = useState('done');
   const [logs, setLogs] = useState([])
-  const [data, setData] = useState(null)
+  const [data, setData] = useState(MOCK_DATA)
   const [eventIndex, setEventIndex] = useState(1);
   const [isDisabledLeft, setIsDisabledLeft] = useState(true);
   const [isDisabledRight, setIsDisabledRight] = useState(false);
@@ -263,17 +263,21 @@ function App() {
             <>
               <div className='flex flex-row text-center items-center'>
                 <ArrowLeft 
-                  className='arrow' 
+                  className={`arrow transition-colors duration-200 ${
+                    isDisabledLeft 
+                      ? "text-[#d4d2d2] cursor-not-allowed"       
+                      : "text-black hover:text-[#BF5700] cursor-pointer" 
+                  }`}
                   size={24} 
-                  color={`#${isDisabledLeft ? "d4d2d2" : "000000"}`} 
-                  style={{cursor: isDisabledLeft ? 'not-allowed' : 'pointer'}}
                   onClick={() => decreaseIndex()} disabled={isDisabledLeft}/>
                 <h3>{eventIndex} of {data.events.length}</h3>
                 <ArrowRight 
-                  className='arrow' 
+                  className={`arrow transition-colors duration-200 ${
+                    isDisabledRight
+                      ? "text-[#d4d2d2] cursor-not-allowed"       
+                      : "text-black hover:text-[#BF5700] cursor-pointer" 
+                  }`}
                   size={24} 
-                  color={`#${isDisabledRight ? "d4d2d2" : "000000"}`} 
-                  style={{cursor: isDisabledRight ? 'not-allowed' : 'pointer'}}
                   onClick={() => increaseIndex()} disabled={isDisabledRight}/>
               </div>
               <EventCard 
