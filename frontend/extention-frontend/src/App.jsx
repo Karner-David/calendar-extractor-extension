@@ -3,6 +3,8 @@ import ProcessingSpinner from './components/LoadingWave';
 import EventCard from './components/EventCard';
 import { Button } from './components/ui/button';
 import { Spinner } from './components/ui/spinner';
+import { Tabs, TabsList, TabsTrigger } from './components/ui/tabs'
+import { ButtonGroup } from './components/ui/button-group';
 import { ArrowLeft, ArrowRight} from 'lucide-react'
 import './App.css'
 
@@ -45,6 +47,8 @@ function App() {
   const [status, setStatus] = useState('done');
   const [logs, setLogs] = useState([])
   const [data, setData] = useState(MOCK_DATA)
+  const [isFile, setIsFile] = useState(false)
+  const [textAreaValue, setTextAreaValue] = useState('')
   const [eventIndex, setEventIndex] = useState(1);
   const [isDisabledLeft, setIsDisabledLeft] = useState(true);
   const [isDisabledRight, setIsDisabledRight] = useState(false);
@@ -243,13 +247,47 @@ function App() {
   return (
       <div className="flex flex-col text-center gap-3" style={{width: 650, padding: 10}}>
         <h2 className='text-6xl mt-3' style={{ fontFamily: 'BILLO', color: "#BF5700"}}>EVENT EXTRACTOR</h2>
+        <div className='w-full grid grid-cols-2 px-3 gap-2'>
+          <div 
+            className={`${isFile ? "border-b-2 border-[#BF5700] text-[#BF5700]" : "border-b-2 border-transparent"} cursor-pointer hover:text-[#BF5700] hover:border-[#BF5700] hover:border-b-2 transition-all duration-200`}
+            onClick={() => setIsFile(true)}
+          >
+            <h2 className='text-xl'>Upload File</h2>
+          </div>
+          <div
+            className={`${!isFile ? "border-b-2 border-[#BF5700] text-[#BF5700]" : "border-b-2 border-transparent"} cursor-pointer hover:text-[#BF5700] hover:border-[#BF5700] hover:border-b-2 transition-all duration-200`}
+            onClick={() => setIsFile(false)}
+          >
+            <h2 className='text-xl'>Upload Text</h2>
+          </div>
+        </div>
         {status !== "processing" && (
-          <input 
-            className="input_box rounded-2xl border-gray-200 border"
-            type="file" 
-            style={{ margin: 0 }}
-            onChange={(e) => handleProcess(e.target.files[0])}
-          />
+          <>
+            {isFile ? (
+              <input 
+                className="input_file rounded-2xl border-gray-200 border"
+                type="file" 
+                style={{ margin: 0 }}
+                onChange={(e) => handleProcess(e.target.files[0])}
+              />
+            ) : (
+              <textarea 
+                className="p-3.5 rounded-2xl border-dashed border-2 border-gray-300 hover:border-gray-400 bg-white"
+                placeholder={`Place your text here!`}
+                style={{ margin: 0 }}
+                value={textAreaValue}
+                onChange={(e) => setTextAreaValue(e.target.value)}
+              />
+            )}
+            <Button
+              className="h-11 text-#080808 hover:bg-green-500 hover:cursor-pointer" 
+              variant="outline"
+              // onClick={submitInfo}
+              disabled={isSubmitting}
+              >
+                {isSubmitting ? "Uploading..." : `Submit ${isFile ? "File" : "Text"}!`}
+            </Button>
+          </>
         )}
 
         {status === "processing" && (
