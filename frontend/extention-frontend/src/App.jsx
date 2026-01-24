@@ -246,16 +246,16 @@ function App() {
 
   return (
       <div className="flex flex-col text-center gap-3" style={{width: 650, padding: 10}}>
-        <h2 className='text-6xl mt-3' style={{ fontFamily: 'BILLO', color: "#BF5700"}}>EVENT EXTRACTOR</h2>
+        <h2 className='text-5xl mt-3 font-sans font-bold' style={{ color: "#BF5700"}}>Event Extractor</h2>
         <div className='w-full grid grid-cols-2 px-3 gap-2'>
           <div 
-            className={`${isFile ? "border-b-2 border-[#BF5700] text-[#BF5700]" : "border-b-2 border-transparent"} cursor-pointer hover:text-[#BF5700] hover:border-[#BF5700] hover:border-b-2 transition-all duration-200`}
+            className={`${isFile ? "border-b-2 border-[#BF5700] text-[#BF5700]" : "border-b-2 border-transparent"} font-sans font-medium cursor-pointer hover:text-[#BF5700] hover:border-[#BF5700] hover:border-b-2 transition-all duration-200`}
             onClick={() => setIsFile(true)}
           >
             <h2 className='text-xl'>Upload File</h2>
           </div>
           <div
-            className={`${!isFile ? "border-b-2 border-[#BF5700] text-[#BF5700]" : "border-b-2 border-transparent"} cursor-pointer hover:text-[#BF5700] hover:border-[#BF5700] hover:border-b-2 transition-all duration-200`}
+            className={`${!isFile ? "border-b-2 border-[#BF5700] text-[#BF5700]" : "border-b-2 border-transparent"} font-sans font-medium cursor-pointer hover:text-[#BF5700] hover:border-[#BF5700] hover:border-b-2 transition-all duration-200`}
             onClick={() => setIsFile(false)}
           >
             <h2 className='text-xl'>Upload Text</h2>
@@ -272,7 +272,7 @@ function App() {
               />
             ) : (
               <textarea 
-                className="p-3.5 rounded-2xl border-dashed border-2 border-gray-300 hover:border-gray-400 bg-white"
+                className="p-3.5 rounded-2xl border-dashed border-2 border-gray-300 hover:border-gray-400 bg-white focus-visible:border-gray-400 focus-visible:border-solid"
                 placeholder={`Place your text here!`}
                 style={{ margin: 0 }}
                 value={textAreaValue}

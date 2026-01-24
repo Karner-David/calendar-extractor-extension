@@ -10,6 +10,7 @@ body {
 }
 
 @theme inline {
+    --font-sans: 'Geist Variable', sans-serif;
     --radius-sm: calc(var(--radius) - 4px);
     --radius-md: calc(var(--radius) - 2px);
     --radius-lg: var(--radius);
@@ -132,3 +133,5 @@ body {
     font-family: BILLO;
     src: url('./assets/billo.TTF');
 }
+
+@import "@fontsource-variable/geist";

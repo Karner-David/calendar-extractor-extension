@@ -38,8 +38,8 @@ function Calendar({
       }}
       classNames={{
         root: cn("w-fit", defaultClassNames.root),
-        months: cn("relative flex flex-col gap-2 md:flex-row", defaultClassNames.months),
-        month: cn("flex w-full flex-col gap-2", defaultClassNames.month),
+        months: cn("relative flex flex-col gap-4 md:flex-row", defaultClassNames.months),
+        month: cn("flex w-full flex-col gap-4", defaultClassNames.month),
         nav: cn(
           "absolute inset-x-0 top-0 flex w-full items-center justify-between gap-1",
           defaultClassNames.nav
@@ -107,11 +107,11 @@ function Calendar({
         },
         Chevron: ({ className, orientation, ...props }) => {
           if (orientation === "left") {
-            return (<ChevronLeftIcon className={cn("size-6", className)} {...props} />);
+            return (<ChevronLeftIcon className={cn("size-4", className)} {...props} />);
           }
 
           if (orientation === "right") {
-            return (<ChevronRightIcon className={cn("size-6", className)} {...props} />);
+            return (<ChevronRightIcon className={cn("size-4", className)} {...props} />);
           }
 
           return (<ChevronDownIcon className={cn("size-4", className)} {...props} />);

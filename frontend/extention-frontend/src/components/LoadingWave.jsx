@@ -7,8 +7,8 @@ export default function ProcessingSpinner({ text = "PROCESSING!" }) {
       {text.split("").map((letter, index) => (
         <motion.span
           key={index}
-          className="text-4xl"
-          style={{ color: "#BF5700", fontFamily: 'BILLO, sans-serif' }}
+          className="text-4xl font-sans"
+          style={{ color: "#BF5700" }}
           initial={{ y: 0 }}
           animate={{ y: [-5, 0] }} 
           transition={{

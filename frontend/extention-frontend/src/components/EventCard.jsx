@@ -1,7 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import { Trash2, X } from 'lucide-react'
 import { Button } from './ui/button';
-import DateWithTime from './ui/date-time';
 import { Label } from './ui/label';
 import {
   Card,
@@ -12,6 +11,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card"
+import NativeDatePicker from './DatePicker';
 
 const safeGetTime = (dateTimeStr) => {
     if (!dateTimeStr || !dateTimeStr.includes('T')) return "00:00";
@@ -97,46 +97,51 @@ export default function EventCard({eventData, onUpdate, onDelete}) {
                     />
                 </CardTitle>
             </CardHeader>
-            <CardContent className="flex justify-evenly">
-                <DateWithTime
-                    dateTitle="Start Date"
-                    timeTitle="Start Time"
-                    date={startDate}
-                    setDate={(d) => handleInputChange(setStartDate, d)}
-                    time={startTime}
-                    setTime={(t) => handleInputChange(setStartTime, t)}
-                />
-                <DateWithTime
-                    dateTitle="End Date"
-                    timeTitle="End Time"
-                    date={endDate}
-                    setDate={(d) => handleInputChange(setEndDate, d)}
-                    time={endTime}
-                    setTime={(t) => handleInputChange(setEndTime, t)}
-                />
+            <CardContent className="grid grid-cols-2 gap-10">
+                <div className='flex flex-col gap-5 justify-evenly' >
+                    <NativeDatePicker
+                        dateTitle="Start Date"
+                        timeTitle="Start Time"
+                        date={startDate}
+                        setDate={(d) => handleInputChange(setStartDate, d)}
+                        time={startTime}
+                        setTime={(t) => handleInputChange(setStartTime, t)}
+                    />
+                    <NativeDatePicker
+                        dateTitle="End Date"
+                        timeTitle="End Time"
+                        date={endDate}
+                        setDate={(d) => handleInputChange(setEndDate, d)}
+                        time={endTime}
+                        setTime={(t) => handleInputChange(setEndTime, t)}
+                    />
+                </div>
+                <div className='flex flex-col justify-between gap-2'>
+                    <div className='flex flex-col items-start gap-1'>
+                        <Label htmlFor="location">Location:</Label>
+                        <input 
+                            className='w-full border-dashed border-2 rounded-sm p-1 pl-2'
+                            id='location' 
+                            type="text" 
+                            value={`${loc}`}
+                            placeholder={`Write the location here!`} 
+                            onChange={(e) => handleInputChange(setLoc, e.target.value)}
+                        />
+                    </div>
+                    <div className='flex flex-col w-full items-start gap-1'>
+                        <Label htmlFor="notes">Notes:</Label>
+                        <textarea 
+                            className='w-full h-20 border-dashed border-2 rounded-sm p-1 pl-2'
+                            id='notes' 
+                            value={`${desc}`}
+                            placeholder={`Write some notes here!`}
+                            onChange={(e) => handleInputChange(setDesc, e.target.value)}
+                        />
+                    </div>
+                </div>
             </CardContent>
             <CardFooter className='flex flex-col items-start gap-2'>
-                <div className='flex flex-col w-full items-start gap-1'>
-                    <Label htmlFor="location">Location:</Label>
-                    <input 
-                        className='w-full border-dashed border-2 rounded-sm p-1 pl-2'
-                        id='location' 
-                        type="text" 
-                        value={`${loc}`}
-                        placeholder={`Write the location here!`} 
-                        onChange={(e) => handleInputChange(setLoc, e.target.value)}
-                    />
-                </div>
-                <div className='flex flex-col w-full items-start gap-1'>
-                    <Label htmlFor="notes">Notes:</Label>
-                    <textarea 
-                        className='w-full h-20 border-dashed border-2 rounded-sm p-1 pl-2'
-                        id='notes' 
-                        value={`${desc}`}
-                        placeholder={`Write some notes here!`}
-                        onChange={(e) => handleInputChange(setDesc, e.target.value)}
-                    />
-                </div>
+                
             </CardFooter>
         </Card>
     )
