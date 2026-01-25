@@ -90,6 +90,8 @@ app.post('/extract', upload.single('file'), async (req, res) => {
         const prompt = `Extract all events from the following text. 
           For each event, extract the summary, date, exact location, and any description/notes.
           If the year is missing, assume the current year is ${currentYear}. 
+          If the time is missing, assume the time is from 12:00 PM to 1:00 PM.
+          If the end time is missing, assume, event takes 1 hour.
           Text: ${text.substring(0, 30000)}`
 
         const result = await model.generateContent(prompt)

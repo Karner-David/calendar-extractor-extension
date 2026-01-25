@@ -46,15 +46,16 @@ const API_URL = "https://calendar-extractor-extension.onrender.com/extract"
 function App() {
   const [status, setStatus] = useState('done');
   const [logs, setLogs] = useState([])
-  const [data, setData] = useState(MOCK_DATA)
+  const [data, setData] = useState(null)
   const [isFile, setIsFile] = useState(false)
+  const [selectedFile, setSelectedFile] = useState(null)
   const [textAreaValue, setTextAreaValue] = useState('')
   const [eventIndex, setEventIndex] = useState(1);
   const [isDisabledLeft, setIsDisabledLeft] = useState(true);
   const [isDisabledRight, setIsDisabledRight] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const handleProcess = async (file) => {
+  const handleProcess = async (input, type) => {
     setStatus("processing")
 
     // authenticate user
@@ -73,8 +74,12 @@ function App() {
 
       // send token to backend
       const formData = new FormData()
-      formData.append('file', file)
-      setLogs(prev => [...prev, "Analyzing pdf with Gemini"])
+      if (type === 'file') {
+        formData.append('file', input)
+      } else {
+        formData.append('text', input)
+      }
+      setLogs(prev => [...prev, "Analyzing input with Gemini"])
 
       try {
         const response = await fetch(API_URL, {
@@ -105,6 +110,22 @@ function App() {
       }
     })
     
+  }
+
+  const handleInputSubmit = () => {
+    if (isFile) {
+      if (selectedFile) {
+        handleProcess(selectedFile, 'file')
+      } else {
+        alert('Please submit a file!')
+      }
+    } else {
+      if (textAreaValue.trim()) {
+        handleProcess(textAreaValue, 'text')
+      } else {
+        alert('Please enter some text!')
+      }
+    }
   }
 
   const handleEventChange = (newEventData) => {
@@ -163,6 +184,7 @@ function App() {
     const event = {
       summary: eventData.summary,
       location: eventData.location || "",
+      colorId: eventData.colorId || "1",
       start: {},
       end: {}
     };
@@ -268,7 +290,7 @@ function App() {
                 className="input_file rounded-2xl border-gray-200 border"
                 type="file" 
                 style={{ margin: 0 }}
-                onChange={(e) => handleProcess(e.target.files[0])}
+                onChange={(e) => setSelectedFile(e.target.files[0])}
               />
             ) : (
               <textarea 
@@ -282,7 +304,7 @@ function App() {
             <Button
               className="h-11 text-#080808 hover:bg-green-500 hover:cursor-pointer" 
               variant="outline"
-              // onClick={submitInfo}
+              onClick={handleInputSubmit}
               disabled={isSubmitting}
               >
                 {isSubmitting ? "Uploading..." : `Submit ${isFile ? "File" : "Text"}!`}

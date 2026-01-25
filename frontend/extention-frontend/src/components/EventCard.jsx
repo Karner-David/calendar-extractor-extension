@@ -12,6 +12,7 @@ import {
   CardTitle,
 } from "@/components/ui/card"
 import NativeDatePicker from './DatePicker';
+import { GOOGLE_COLORS } from './colors';
 
 const safeGetTime = (dateTimeStr) => {
     if (!dateTimeStr || !dateTimeStr.includes('T')) return "00:00";
@@ -20,8 +21,6 @@ const safeGetTime = (dateTimeStr) => {
 
 export default function EventCard({eventData, onUpdate, onDelete}) {
     const isUserEdit = useRef(false)
-
-    const isAllDay = !eventData.startDateTime.includes('T');
     const [summary, setSummary] = useState(eventData.summary);
     const [desc, setDesc] = useState(eventData.description);
     const [loc, setLoc] = useState(eventData.location);
@@ -29,6 +28,7 @@ export default function EventCard({eventData, onUpdate, onDelete}) {
     const [startTime, setStartTime] = useState(() => safeGetTime(eventData.startDateTime))
     const [endDate, setEndDate] = useState(() => new Date(eventData.endDateTime))
     const [endTime, setEndTime] = useState(() => safeGetTime(eventData.endDateTime))
+    const [colorId, setColorId] = useState(eventData.colorId || '1')
 
     const rebuildDateTime = (dateObj, timeStr) => {
         if (!dateObj) return ""
@@ -44,6 +44,11 @@ export default function EventCard({eventData, onUpdate, onDelete}) {
     const handleInputChange = (setter, value) => {
         isUserEdit.current = true
         setter(value)
+    }
+
+    const handleColorChange = (newId) => {
+        setColorId(newId)
+        onUpdate({ ...eventData, colorId: newId})
     }
 
     useEffect(() => {
@@ -115,6 +120,19 @@ export default function EventCard({eventData, onUpdate, onDelete}) {
                         time={endTime}
                         setTime={(t) => handleInputChange(setEndTime, t)}
                     />
+                    <div className="flex gap-2 mt-3 flex-wrap justify-center">
+                    {GOOGLE_COLORS.map((c) => (
+                        <div
+                        key={c.id}
+                        onClick={() => handleColorChange(c.id)}
+                        className={`w-4.25 h-4.25 rounded-full cursor-pointer transition-all ${
+                            colorId === c.id ? "ring-2 ring-offset-2 ring-black scale-110" : ""
+                        }`}
+                        style={{ backgroundColor: c.bg }}
+                        title={c.name}
+                        />
+                    ))}
+                    </div>
                 </div>
                 <div className='flex flex-col justify-between gap-2'>
                     <div className='flex flex-col items-start gap-1'>
