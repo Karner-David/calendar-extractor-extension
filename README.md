@@ -8,7 +8,7 @@
 
 **Event Extractor** is a Chrome Extension that uses Google's Gemini AI to instantly sift through unstructured documents (like course syllabi or email schedules), extract event details, and sync them directly to your Google Calendar.
 
-![Event Extractor Interface](assets/EventExtractor-1.1.0.png.png)
+![Event Extractor Interface](assets/EventExtractor-1.1.0.png)
 
 ---
 
