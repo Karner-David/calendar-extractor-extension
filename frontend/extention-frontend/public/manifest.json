@@ -19,7 +19,8 @@
   "oauth2": {
     "client_id": "677758899476-j8d1fh97s6kdlnr8t1an9hcvir0bbeiq.apps.googleusercontent.com",
     "scopes": [
-      "https://www.googleapis.com/auth/calendar.events"
+      "https://www.googleapis.com/auth/calendar.events",
+      "https://www.googleapis.com/auth/userinfo.email"
     ]
   },
   "content_security_policy": {
