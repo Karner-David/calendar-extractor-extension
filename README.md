@@ -22,6 +22,10 @@
 
 **[Get it on the Chrome Web Store](https://chromewebstore.google.com/detail/event-extractor/dbongknaphcmabpchkclhcjhfkljmlna)**
 
+> ⚠️ **Verification Status:** This extension is currently pending Google's verification process.
+>
+> You can still install and use it, but you may see a **"Google hasn't verified this app"** warning when logging in. To proceed, simply click **Advanced** → **Go to Event Extractor (unsafe)**.
+
 ---
 
 ## ✨ Features
